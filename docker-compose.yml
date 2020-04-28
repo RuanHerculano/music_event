@@ -1,0 +1,37 @@
+version: '3'
+services:
+  proxy.music.event:
+    image: nginx
+    container_name: proxy.music.event
+    volumes:
+      - ./services/music-devproxy/conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80
+    environment:
+      NGINX_PORT: 80
+    links:
+      - api.music.event
+      # - client.music.event
+
+  # DATABASES SERVICES
+  database.music.event:
+    container_name: database.music.event
+    image: postgres:11.5-alpine
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    env_file:
+      - ./config/database.env
+
+  # APIS SERVICES
+  api.music.event:
+    container_name: api.music.event
+    build:
+      context: ./apps/api
+    env_file:
+      - ./config/api.env
+    volumes:
+      - ./apps/api:/app
+    links:
+      - database.music.event
+    stdin_open: true
+    tty: true
