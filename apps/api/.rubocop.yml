@@ -1,0 +1,40 @@
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'bin/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - 'config/environments/**/*'
+    - 'config/initializers/**/*'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+    - 'app/admin/**/*.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'db/migrate/**'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/**'
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
+  AllowHeredoc: true
+  AllowURI: false
+  URISchemes:
+    - http
+    - https
+  IgnoreCopDirectives: false

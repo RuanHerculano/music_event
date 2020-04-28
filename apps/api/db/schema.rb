@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2020_04_28_182111) do
   end
 
   create_table "event_artists", force: :cascade do |t|
-    t.integer "order"
+    t.integer "order", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "event_id", null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2020_04_28_182111) do
 
   create_table "events", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "schedule"
+    t.datetime "schedule", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

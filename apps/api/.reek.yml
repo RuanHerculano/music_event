@@ -1,0 +1,6 @@
+detectors:
+  IrresponsibleModule:
+    enabled: false
+  DuplicateMethodCall:
+    allow_calls:
+      - 'Rails.logger'

@@ -6,7 +6,7 @@ module V1
     end
     
     def index
-      @genres = Genre.all
+      @genres = Genre.all.page(params[:page])
       render 'list.json'
     end
 

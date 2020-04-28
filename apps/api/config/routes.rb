@@ -5,5 +5,6 @@ Rails.application.routes.draw do
 
     resources :artist, only: %I(create index)
     resources :genre, only: %I(create index)
+    resources :event, only: %I(create index)
   end
 end

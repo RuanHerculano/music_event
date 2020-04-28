@@ -6,7 +6,7 @@ module V1
     end
     
     def index
-      @artists = Artist.all
+      @artists = Artist.all.page(params[:page]).per(params[:per])
       render 'list.json'
     end
 
