@@ -8,6 +8,7 @@
       >
         <b-form-radio
           v-model="eventType"
+          @change="setEventType"
           name="event-type-radios"
           value="concert"
         >
@@ -15,6 +16,7 @@
         </b-form-radio>
         <b-form-radio
           v-model="eventType"
+          @change="setEventType"
           name="event-type-radios"
           value="festival"
         >
@@ -44,6 +46,36 @@
       <div>
         <b-form-timepicker v-model="scheduleTime"></b-form-timepicker>
       </div>
+
+      <div>
+        <label for="genreSelect">Music genres</label>
+        <b-form-select
+          id="genreSelect"
+          v-model="genreSelected"
+          :options="genreOptions"
+          :multiple="true"
+        ></b-form-select>
+      </div>
+
+      <div>
+        <label for="artistSelect">
+          Artist<span v-if="isArtistMultiple">s</span>
+        </label>
+        <b-form-select
+          id="artistSelect"
+          v-model="artistSelected"
+          :options="artistOptions"
+          :multiple="isArtistMultiple"
+        ></b-form-select>
+      </div>
+
+      <b-button type="submit" variant="primary">
+        Save
+      </b-button>
+
+      <b-button :to="{ name: 'EventList' }">
+        Back
+      </b-button>
     </b-form>
   </div>
 </template>
@@ -52,19 +84,43 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
+  created() {
+    this.getGenreList();
+    this.getArtistList();
+  },
   data() {
     return {
       eventType: "concert",
       scheduleDay: this.todayToString(),
-      scheduleTime: "12:00:00"
+      scheduleTime: "12:00:00",
+      genreSelected: [],
+      artistSelected: []
     };
   },
   methods: {
+    setEventType(event) {
+      if (event === "festival") {
+        this.artistSelected = [];
+        return;
+      }
+
+      this.artistSelected = null;
+    },
     onSubmit() {
-      this.setData({ value: this.formatSchedule(), name: "schedule" }).then(
-        () => {
-          console.log("submit", this.active);
-        }
+      let artists = this.artistSelected;
+
+      if (!this.isArtistMultiple) {
+        artists = [artists];
+      }
+
+      const promises = [
+        this.setData({ value: this.formatSchedule(), name: "schedule" }),
+        this.setData({ value: this.genreSelected, name: "genre_ids" }),
+        this.setData({ value: artists, name: "artist_ids" })
+      ];
+
+      Promise.all(promises).then(() =>
+        this.save().then(() => this.$router.push({ name: "EventList" }))
       );
     },
     todayToString() {
@@ -100,13 +156,38 @@ export default {
       this.setData({ value, name });
     },
     ...mapActions({
+      save: "events/save",
       setData: "events/setData",
-      resetActive: "events/resetActive"
+      resetActive: "events/resetActive",
+      getGenreList: "genres/list",
+      getArtistList: "artists/list"
     })
   },
   computed: {
+    isArtistMultiple() {
+      return this.eventType === "festival";
+    },
+    genreOptions() {
+      if (!this.genres) {
+        return [];
+      }
+
+      return this.genres.map(genre => ({ value: genre.id, text: genre.name }));
+    },
+    artistOptions() {
+      if (!this.artists) {
+        return [];
+      }
+
+      return this.artists.map(artist => ({
+        value: artist.id,
+        text: artist.name
+      }));
+    },
     ...mapGetters({
-      active: "events/active"
+      active: "events/active",
+      genres: "genres/list",
+      artists: "artists/list"
     })
   }
 };

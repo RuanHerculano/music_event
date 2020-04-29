@@ -11,7 +11,4 @@ export const setData = ({ commit }, data) => commit(types.SET_DATA, data);
 export const resetActive = ({ commit }) => commit(types.RESET_ACTIVE);
 
 export const save = ({ state, dispatch }) =>
-  Event.save(state.active).then(() => {
-    dispatch("list");
-    dispatch("resetActive");
-  });
+  Event.save(state.active).then(() => dispatch("resetActive"));
