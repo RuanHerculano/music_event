@@ -2,7 +2,8 @@ import * as types from "./types";
 
 const defaultActive = {
   name: "",
-  schedule: new Date()
+  schedule: new Date(),
+  location: ""
 };
 
 export const state = {

@@ -33,6 +33,15 @@
         ></b-form-input>
       </b-form-group>
 
+      <b-form-group id="location" label="Location" label-for="location">
+        <b-form-input
+          id="location"
+          :value="active['location']"
+          @input="processData($event, 'location')"
+          required
+        ></b-form-input>
+      </b-form-group>
+
       <div>
         <label for="schedule">Scheduled day</label>
         <b-form-datepicker
