@@ -22,6 +22,5 @@ RSpec.describe EventGenre, type: :model do
 
       it { is_expected.to validate_uniqueness_of(:genre).scoped_to(:event_id) }
     end
-
   end
 end
