@@ -11,7 +11,7 @@ services:
       NGINX_PORT: 80
     links:
       - api.music.event
-      # - client.music.event
+      - client.music.event
 
   # DATABASES SERVICES
   database.music.event:
@@ -35,3 +35,18 @@ services:
       - database.music.event
     stdin_open: true
     tty: true
+
+  # CLIENT SERVICES
+  client.music.event:
+    container_name: client.music.event
+    build:
+      context: ./apps/client
+    env_file:
+      - ./config/client.env
+    volumes:
+      - ./apps/client:/app
+    links:
+      - api.music.event
+    stdin_open: true
+    tty: true
+
