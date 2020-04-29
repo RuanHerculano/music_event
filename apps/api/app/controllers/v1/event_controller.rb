@@ -6,12 +6,21 @@ module V1
     end
 
     def index
-      @events = Event.all.page(params[:page])
+      @events = Event.all.page(params[:page]).per(params[:per])
+      render 'list.json'
+    end
+
+    def festivals
+      @events = Event.festivals.page(params[:page]).per(params[:per])
+      render 'list.json'
+    end
+
+    def concerts
+      @events = Event.concerts.page(params[:page]).per(params[:per])
       render 'list.json'
     end
 
     private
-
     def create_params
       params.require(:event).permit(
         :name,

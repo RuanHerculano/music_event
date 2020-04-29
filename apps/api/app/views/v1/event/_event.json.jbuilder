@@ -8,6 +8,7 @@ json.artists do
 
     json.id artist.id
     json.order event_artist.order
+    json.name artist.name
   end
 end
 

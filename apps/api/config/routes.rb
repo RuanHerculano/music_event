@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :artist, only: %I(create index)
     resources :genre, only: %I(create index)
-    resources :event, only: %I(create index)
+    resources :event, only: %I(create index) do
+      collection do
+        get :festivals
+        get :concerts
+      end
+    end
   end
 end
