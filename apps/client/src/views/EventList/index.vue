@@ -1,6 +1,6 @@
 <template>
   <div>
-    event list
+    <b-button :to="{ name: 'CreateEvent' }">Create event</b-button>
   </div>
 </template>
 
