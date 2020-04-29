@@ -1,0 +1,24 @@
+{
+  "labels": {
+    "email": "E-mail",
+    "password": "Password",
+    "passwordConfirmation": "Password confirmation"
+  },
+  "views": {
+    "login": {
+      "email": {
+        "placeholder": "Enter your e-mail here"
+      },
+      "password": {
+        "placeholder": "Insert your password here"
+      },
+      "passwordConfirmation": {
+        "placeholder": "Confirm your password here"
+      },
+      "actions": {
+        "login": "Sign In",
+        "register": "Sign Up"
+      }
+    }
+  }
+}
