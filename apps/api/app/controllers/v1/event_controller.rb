@@ -6,21 +6,29 @@ module V1
     end
 
     def index
-      @events = Event.all.page(params[:page]).per(params[:per])
+      list_gatherer(:all)
       render 'list.json'
     end
 
     def festivals
-      @events = Event.festivals.page(params[:page]).per(params[:per])
+      list_gatherer(:festivals)
       render 'list.json'
     end
 
     def concerts
-      @events = Event.concerts.page(params[:page]).per(params[:per])
+      list_gatherer(:concerts)
       render 'list.json'
     end
 
     private
+    def list_gatherer(method)
+      @events = Event.send(method).without_genres(params[:exclude_genre])
+        .with_genres(params[:include_genre])
+        .order_by_schedule
+        .page(params[:page])
+        .per(params[:per])
+    end
+
     def create_params
       params.require(:event).permit(
         :name,

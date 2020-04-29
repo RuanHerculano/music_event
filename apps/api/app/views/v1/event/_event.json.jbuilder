@@ -1,6 +1,7 @@
 json.extract! event,
   :id,
-  :name
+  :name,
+  :schedule
 
 json.artists do
   json.array!(event.event_artists) do |event_artist|

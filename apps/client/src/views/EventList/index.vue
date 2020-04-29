@@ -1,6 +1,34 @@
 <template>
   <div>
     <b-button :to="{ name: 'CreateEvent' }">Create event</b-button>
+    <b-button @click="fetch('festivals')">Festivals</b-button>
+    <b-button @click="fetch('concerts')">Concerts</b-button>
+
+    <header>
+      <div>
+        <b-row>
+          <b-col>
+            <label for="searchGenreSelect">Search music genres</label>
+            <b-form-select
+              id="searchGenreSelect"
+              v-model="searchGenreSelected"
+              :options="genreOptions"
+              :multiple="true"
+            ></b-form-select>
+          </b-col>
+          <b-col>
+            <label for="excludeGenreSelect">Exclude music genres</label>
+            <b-form-select
+              id="excludeGenreSelect"
+              v-model="excludeGenreSelected"
+              :options="genreOptions"
+              :multiple="true"
+            ></b-form-select>
+          </b-col>
+        </b-row>
+      </div>
+      <b-button @click="fetch(type)">Filter</b-button>
+    </header>
 
     <b-card class="mb-2" v-for="(day, index) in eventsByDateArray" :key="index">
       <b-card-header>
@@ -21,15 +49,50 @@ import { mapActions, mapGetters } from "vuex";
 import EventItem from "@/views/EventList/components/EventItem";
 
 export default {
+  data() {
+    return {
+      type: "",
+      searchGenreSelected: [],
+      excludeGenreSelected: []
+    };
+  },
   created() {
     this.getList();
+    this.getGenreList();
   },
   methods: {
+    fetch(type) {
+      this.type = type;
+      const filter = {
+        include_genre: this.searchGenreSelected,
+        exclude_genre: this.excludeGenreSelected
+      };
+
+      if (!this.type) {
+        return this.getList(filter);
+      }
+
+      if (this.type === "festivals") {
+        return this.getFestivals(filter);
+      }
+
+      return this.getConcerts(filter);
+    },
     ...mapActions({
-      getList: "events/list"
+      getList: "events/list",
+      getFestivals: "events/listFestivals",
+      getConcerts: "events/listConcerts",
+      getGenreList: "genres/list"
     })
   },
   computed: {
+    genreOptions() {
+      if (!this.genres) {
+        return [];
+      }
+
+      return this.genres.map(genre => ({ value: genre.id, text: genre.name }));
+    },
     eventsByDate() {
       return this.events.reduce((groups, event) => {
         const date = event.schedule.split("T")[0];
@@ -52,6 +115,7 @@ export default {
       });
     },
     ...mapGetters({
+      genres: "genres/list",
       events: "events/list"
     })
   },
