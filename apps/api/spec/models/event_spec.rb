@@ -4,6 +4,7 @@ RSpec.describe Event, type: :model do
   describe '#validations' do
     it { is_expected.to validate_presence_of(:event_artists) }
     it { is_expected.to validate_presence_of(:event_genres) }
+    it { is_expected.to validate_presence_of(:location) }
   end
 
   describe '#associations' do
@@ -27,6 +28,7 @@ RSpec.describe Event, type: :model do
         event_genres.map.with_index do |genre, index|
           Event.create!(name: 'Test event', 
                         schedule: DateTime.now,
+                        location: 'test location',
                         event_artists: [event_artists[index]],
                         event_genres: [genre])
         end
@@ -41,6 +43,7 @@ RSpec.describe Event, type: :model do
         event_genres_festival.map.with_index do |genre, index|
           Event.create!(name: 'Test event', 
                         schedule: DateTime.now,
+                        location: 'test location',
                         event_artists: [event_artists_festival[index], event_artists_festival[index + 5]],
                         event_genres: [genre])
         end
@@ -66,6 +69,7 @@ RSpec.describe Event, type: :model do
         event_genres.map.with_index do |genre, index|
           Event.create!(name: 'Test event', 
                         schedule: DateTime.now,
+                        location: 'test location',
                         event_artists: [event_artists[index]],
                         event_genres: [genre])
         end
@@ -80,6 +84,7 @@ RSpec.describe Event, type: :model do
         event_genres_festival.map.with_index do |genre, index|
           Event.create!(name: 'Test event', 
                         schedule: DateTime.now,
+                        location: 'test location',
                         event_artists: [event_artists_festival[index], event_artists_festival[index + 5]],
                         event_genres: [genre])
         end

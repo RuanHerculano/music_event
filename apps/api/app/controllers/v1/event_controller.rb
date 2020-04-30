@@ -33,6 +33,7 @@ module V1
       params.require(:event).permit(
         :name,
         :schedule,
+        :location,
         :artist_ids,
         :genres_ids
       ).merge(event_artists: event_artists,

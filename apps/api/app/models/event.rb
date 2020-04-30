@@ -8,6 +8,7 @@ class Event < ApplicationRecord
   validates :event_genres, presence: true, length: { minimum: 1 }
 
   validates_presence_of :schedule
+  validates_presence_of :location
 
   scope :joined_event_artists, (->() { joins(:event_artists).group('events.id') })
 

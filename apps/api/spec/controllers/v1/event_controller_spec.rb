@@ -30,6 +30,7 @@ RSpec.describe V1::EventController, type: :controller do
       let(:request_body) do
         { event: { name: 'Test name',
                    schedule: DateTime.now,
+                   location: 'test location',
                    artist_ids: [artist.id],
                    genre_ids: [genre.id] } }
       end
@@ -77,6 +78,7 @@ RSpec.describe V1::EventController, type: :controller do
         event_genres.map.with_index do |genre, index|
           Event.create!(name: 'Test event', 
                         schedule: DateTime.now,
+                        location: 'test location',
                         event_artists: [event_artists[index]],
                         event_genres: [genre])
         end
@@ -124,6 +126,7 @@ RSpec.describe V1::EventController, type: :controller do
         event_genres.map.with_index do |genre, index|
           Event.create!(name: 'Test event', 
                         schedule: DateTime.now,
+                        location: 'test location',
                         event_artists: [event_artists[index]],
                         event_genres: [genre])
         end
@@ -138,6 +141,7 @@ RSpec.describe V1::EventController, type: :controller do
         event_genres_festival.map.with_index do |genre, index|
           Event.create!(name: 'Test event', 
                         schedule: DateTime.now,
+                        location: 'test location',
                         event_artists: [event_artists_festival[index], event_artists_festival[index + 5]],
                         event_genres: [genre])
         end
@@ -185,6 +189,7 @@ RSpec.describe V1::EventController, type: :controller do
         event_genres.map.with_index do |genre, index|
           Event.create!(name: 'Test event', 
                         schedule: DateTime.now,
+                        location: 'test location',
                         event_artists: [event_artists[index]],
                         event_genres: [genre])
         end
@@ -199,6 +204,7 @@ RSpec.describe V1::EventController, type: :controller do
         event_genres_festival.map.with_index do |genre, index|
           Event.create!(name: 'Test event', 
                         schedule: DateTime.now,
+                        location: 'test location',
                         event_artists: [event_artists_festival[index], event_artists_festival[index + 5]],
                         event_genres: [genre])
         end

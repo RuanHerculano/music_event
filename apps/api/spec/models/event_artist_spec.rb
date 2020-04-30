@@ -15,6 +15,7 @@ RSpec.describe EventArtist, type: :model do
       let!(:event) do
         Event.create!(name: 'Test Event',
                       schedule: DateTime.now,
+                      location: 'test location',
                       event_artists: [event_artist],
                       event_genres: [event_genre]) 
       end
